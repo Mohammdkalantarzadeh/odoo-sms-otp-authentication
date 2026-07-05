@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_users_otp,res.users.otp,base.model_res_users,base.group_user,1,1,1,1
+access_res_config_settings_otp,res.config.settings.otp,base.model_res_config_settings,base.group_system,1,1,1,1
+access_res_users_otp,res.users.otp,base.model_res_users,,1,0,0,0
+access_res_config_settings_otp,res.config.settings.otp,base.model_res_config_settings,custom_otp_login.group_otp_manager,1,1,1,0
+access_ir_config_parameter_otp,ir.config.parameter.otp,base.model_ir_config_parameter,custom_otp_login.group_otp_manager,1,1,1,0
+access_res_users_otp,res.users.otp,base.model_res_users,base.group_portal,1,0,0,0

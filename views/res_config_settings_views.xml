@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_otp" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.otp</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//form" position="inside">
+
+                <app name="otp_login_system" string="OTP Login System">
+
+                    <block title="Main OTP Settings">
+
+                        <setting id="otp_enable_setting"
+                                 string="Enable OTP Login"
+                                 help="By enabling this option, users can log in with mobile number and verification code">
+                            <field name="enable_otp_login"/>
+                        </setting>
+
+                        <setting id="otp_native_login_setting"
+                                 string="Enable Odoo Native Login"
+                                 help="If enabled, the login form with username and password will also be displayed"
+                                 invisible="not enable_otp_login">
+                            <field name="enable_odoo_native_login"/>
+                        </setting>
+
+                    </block>
+
+                    <block title="Kaveh Negar Service Settings"
+                           invisible="not enable_otp_login">
+
+                        <setting id="kaveh_negar_api_key_setting"
+                                 string="Kaveh Negar API Key"
+                                 help="Get your API Key from the Kaveh Negar panel">
+                            <field name="kaveh_negar_api_key" placeholder="Example: 6A7B8C9D0E1F2G3H4I5J6K7L8M9N0O1P"/>
+                        </setting>
+
+                        <setting id="kaveh_sender_number_setting"
+                                 string="Sender Number"
+                                 help="Sender number registered in Kaveh Negar">
+                            <field name="sender_number" placeholder="1000596446"/>
+                        </setting>
+
+                        <setting id="kaveh_template_name_setting"
+                                 string="SMS Template Name"
+                                 help="Name of the template you have created in Kaveh Negar for sending verification codes">
+                            <field name="otp_template_name" placeholder="otp-login"/>
+                        </setting>
+
+                    </block>
+
+                    <block title="Test and Troubleshooting"
+                           invisible="not enable_otp_login">
+
+                        <!-- Stylish card for connection test -->
+                        <div class="o_setting_right_pane">
+                            <div style="background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); 
+                                        border-radius: 12px; 
+                                        padding: 20px; 
+                                        border: 1px solid #e2e8f0;
+                                        box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+                                
+                                <!-- Main row: label, status, button -->
+                                <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+                                    
+                                    <!-- Current status label -->
+                                    <div style="min-width: 100px;">
+                                        <span style="font-weight: 600; 
+                                                     color: #334155; 
+                                                     font-size: 14px;
+                                                     letter-spacing: 0.3px;">
+                                            <i class="fa fa-circle" style="font-size: 8px; color: #3b82f6; margin-left: 5px; vertical-align: middle;"/>
+                                            Service Status:
+                                        </span>
+                                    </div>
+                                    
+                                    <!-- HTML field displaying status -->
+                                    <div style="flex: 0 1 auto;">
+                                        <field name="otp_status_html" 
+                                               widget="html" 
+                                               nolabel="1"
+                                               class="oe_inline"/>
+                                    </div>
+                                    
+                                    <!-- Stylish connection test button -->
+                                    <div style="margin-right: auto;">
+                                        <button name="action_test_otp_connection" 
+                                                type="object" 
+                                                class="btn btn-primary"
+                                                style="background-color: #2563eb; 
+                                                       border: none; 
+                                                       border-radius: 6px; 
+                                                       padding: 10px 20px;
+                                                       font-weight: 500;
+                                                       font-size: 14px;
+                                                       color: #ffffff;
+                                                       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                                                       transition: all 0.15s ease;"
+                                                onmouseover="this.style.backgroundColor='#1d4ed8'; this.style.boxShadow='0 2px 6px rgba(37, 99, 235, 0.3)';"
+                                                onmouseout="this.style.backgroundColor='#2563eb'; this.style.boxShadow='0 1px 3px rgba(0, 0, 0, 0.1)';">
+                                            <i class="fa fa-mobile" style="margin-right: 6px; color: #ffffff;"/>
+                                            Test SMS Sending
+                                        </button>
+                                    </div>
+                                    
+                                </div>
+                                
+                                <!-- Subtle separator line -->
+                                <hr style="margin: 20px 0; border: none; border-top: 1px solid #e2e8f0;"/>
+                                
+                                <!-- Settings guide -->
+                                <div style="background: #eff6ff; 
+                                            border-radius: 8px; 
+                                            padding: 12px 16px; 
+                                            border-right: 4px solid #3b82f6;">
+                                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                                        <i class="fa fa-info-circle" style="color: #3b82f6; font-size: 18px; margin-top: 2px;"/>
+                                        <div>
+                                            <strong style="color: #1e3a8a; display: block; margin-bottom: 6px;">
+                                                Kaveh Negar Settings Guide
+                                            </strong>
+                                            <span style="color: #475569; font-size: 13px; line-height: 1.6;">
+                                                1. Go to the Kaveh Negar panel to get your API Key
+                                                <br/>
+                                                2. Create an SMS template named 
+                                                <code style="background: #dbeafe; 
+                                                           color: #1e40af; 
+                                                           padding: 2px 8px; 
+                                                           border-radius: 4px;
+                                                           font-family: monospace;">
+                                                    otp-login
+                                                </code> 
+                                                <br/>
+                                                3. Set the template text to 
+                                                <code style="background: #dbeafe; 
+                                                           color: #1e40af; 
+                                                           padding: 2px 8px; 
+                                                           border-radius: 4px;
+                                                           font-family: monospace;">
+                                                    Your verification code: {token}
+                                                </code> 
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div style="background: #fef3c7; 
+                                            border-radius: 8px; 
+                                            padding: 12px 16px; 
+                                            border-right: 4px solid #f59e0b;
+                                            margin-top: 12px;">
+                                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                                        <i class="fa fa-shield" style="color: #f59e0b; font-size: 18px; margin-top: 2px;"/>
+                                        <div>
+                                            <strong style="color: #92400e; display: block; margin-bottom: 6px;">
+                                                Security Notes
+                                            </strong>
+                                            <span style="color: #78350f; font-size: 13px; line-height: 1.6;">
+                                                • Be sure to use HTTPS protocol
+                                                <br/>
+                                                • Verification code expires after 5 minutes
+                                                <br/>
+                                                • Each mobile number can request a code a maximum of 3 times per hour
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                    </block>
+
+                </app>
+
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
